@@ -6,6 +6,16 @@ class ColoursTableViewController: UIViewController {
    
     var colors: [UIColor] = [] //initialse empty array for colors
     
+    enum Cells {
+        static let colorCell = "ColorCell"
+    }
+    
+    
+    enum Segues {
+        static let toDetailVC = "toColoursDetailVC"
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,17 +26,11 @@ class ColoursTableViewController: UIViewController {
     
     func addRandomColors(){
         for _ in 0..<50{
-            colors.append(createRandomColor())
+            colors.append(.random())
         }
     }
-
-    func createRandomColor() -> UIColor {
-        
-        let randomColor = UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1)
-        //alpha is the opacity
-        
-        return randomColor
-    }
+//.random refers to extention created in other file
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,7 +51,7 @@ extension ColoursTableViewController: UITableViewDelegate, UITableViewDataSource
     //will also be the number of colours in the array
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell  = tableView.dequeueReusableCell(withIdentifier: "ColorCell")else{
+        guard let cell  = tableView.dequeueReusableCell(withIdentifier: Cells.colorCell)else{
             return UITableViewCell()
         }
         let color = colors[indexPath.row]
@@ -62,10 +66,11 @@ extension ColoursTableViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let color = colors[indexPath.row]
-        performSegue(withIdentifier: "toColoursDetailVC", sender: color)
+        performSegue(withIdentifier: Segues.toDetailVC, sender: color)
         
         //performSegue - perform the action of navigating to the third storyboard for any cell that is clicked
         // the performseque action started by having a nil sender so we define color to be a sender
+        //stringly typed values can create errors so we refactor them into enums
     }
     
 }
