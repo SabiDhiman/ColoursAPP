@@ -23,10 +23,17 @@ class ColoursTableViewController: UIViewController {
     func createRandomColor() -> UIColor {
         
         let randomColor = UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1)
-        
+        //alpha is the opacity
         
         return randomColor
     }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ColoursDetailViewController
+        destinationVC.color = sender as? UIColor
+    }
+    
     
     
 }
@@ -54,9 +61,11 @@ extension ColoursTableViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "toColoursDetailVC", sender: nil)
+        let color = colors[indexPath.row]
+        performSegue(withIdentifier: "toColoursDetailVC", sender: color)
         
         //performSegue - perform the action of navigating to the third storyboard for any cell that is clicked
+        // the performseque action started by having a nil sender so we define color to be a sender
     }
     
 }

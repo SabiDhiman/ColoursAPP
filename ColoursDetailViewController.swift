@@ -8,11 +8,15 @@
 import UIKit
 
 class ColoursDetailViewController: UIViewController {
-
+    
+    var color: UIColor?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        view.backgroundColor = color ?? UIColor.blue
+        //nil colescing
     }
     
 
